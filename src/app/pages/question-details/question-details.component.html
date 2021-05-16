@@ -1,0 +1,156 @@
+<div class="container-fluid pt-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-11 col-lg-8 col-12 pt-5">
+            <div class="row pb-5">
+                <div class="col-12">
+                    <h6 routerLink="/" class="text-muted back">
+                        <small>
+                            << Go Back </small>
+                    </h6>
+                    <div class="shadow card-body main mx-auto mt-5 position-relative" *ngIf="!questionLoading">
+                        <div class="card userInfo shadow-sm">
+                            <a class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img [src]="question?.owner?.profile_image" alt="@mdo" width="75" height="75"
+                                        class="rounded mr-2" loading="lazy">
+                                    <span class="px-4">
+                                        <small class="text-muted">
+                                            Posted
+                                            <b>
+                                                By
+                                            </b> / On
+                                        </small>
+                                        <br>
+                                        <a [href]="question?.owner?.link" target="_blank">
+                                            <strong>{{question?.owner?.display_name}}</strong>
+                                        </a>
+                                        / {{(question?.creation_date *1000) | date:"mediumDate"}}
+                                    </span>
+                                </div>
+                                <button class="btn btn-circle btn-outline-primary rounded-circle"><span>
+                                        {{question?.owner?.reputation}} </span><br><small> Score </small></button>
+                            </a>
+                        </div>
+                        <div class="row d-flex align-items-start  pt-5">
+                            <div class="col-md-12 overflow-hidden text-center text-md-start">
+                                <h3 class="text-start">
+                                    <b>
+                                        {{question?.title}}
+                                    </b>
+                                </h3>
+                                <hr>
+                                <div [innerHtml]="question?.body" class="ps-3 text-start questionBody">
+
+                                </div>
+                                <div class="py-3 text-center text-md-start">
+                                    <button type="button" *ngFor="let tag of question?.tags"
+                                        class="btn btn-sm mb-3 btn-outline-dark small p-0 me-3 px-3 pill">{{tag}}</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <h1 *ngIf="questionLoading" class="w-100 card shadow p-5 text-center">
+                        Loading...
+                    </h1>
+                </div>
+                <div class="col-12 row pt-5">
+                    <div class="col-md-3 text-md-start mb-3 text-center">
+                        <h4>
+                            Answers ( {{answers.length}} / {{question?.answer_count || '0'}} )
+                        </h4>
+                    </div>
+                    <div class="col text-md-end text-center">
+                        <div class="d-inline-block mb-3 me-4">
+                            <button type="button" class="btn" [class.btn-outline-primary]="sort!='activity'"
+                                [class.btn-primary]="sort=='activity'"
+                                (click)="changeSort('activity')">Activity</button>
+                        </div>
+                        <div class="d-inline-block mb-3 me-4">
+                            <button type="button" class="btn" [class.btn-outline-primary]="sort!='votes'"
+                                [class.btn-primary]="sort=='votes'" (click)="changeSort('votes')">Votes</button>
+                        </div>
+                        <div class="d-inline-block mb-3 me-4">
+                            <button type="button" class="btn" [class.btn-outline-primary]="sort!='creation'"
+                                [class.btn-primary]="sort=='creation'"
+                                (click)="changeSort('creation')">Creation</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" *ngFor="let answer of answers">
+                    <div class="shadow card-body main mx-auto mt-5 position-relative"
+                        [class.comments]="answer.comment_count > 0">
+                        <div class="card userInfo shadow-sm">
+                            <a class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img [src]="answer.owner?.profile_image" alt="@mdo" width="75" height="75"
+                                        class="rounded mr-2" loading="lazy">
+                                    <span class="px-4">
+                                        <small class="text-muted">
+                                            Answer <b>
+                                                By
+                                            </b>
+                                            / On
+                                        </small>
+                                        <br>
+                                        <a [href]="answer.owner?.link" target="_blank">
+                                            <strong>{{answer.owner?.display_name}}</strong>
+                                        </a> /
+                                        <small class="text-muted">
+                                            {{(answer.creation_date *1000) | date:'mediumDate'}}
+                                        </small>
+                                    </span>
+                                </div>
+                                <button class="btn btn-circle btn-outline-primary rounded-circle"><span>
+                                        {{answer.owner?.reputation}} </span><br><small> Score </small></button>
+                            </a>
+                        </div>
+                        <div class="row d-flex align-items-start  pt-5">
+                            <div class="col-md-12 overflow-hidden text-center text-md-start">
+                                <div [innerHtml]="answer.body" class="ps-3 text-start questionBody">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-section card shadow shadow-sm p-3" *ngIf="answer.comment_count > 0">
+                        <h3 class="p-0 m-0">
+                            Comments
+                        </h3>
+                        <hr>
+                        <div class="col-12 card shadow-sm mb-3 p-2 px-4" *ngFor="let comment of answer.comments">
+                            <small [innerHtml]="comment.body">
+
+                            </small>
+                            <hr>
+                            <small class="text-muted">
+                                by: <a [href]="comment.owner?.link" target="_blank">{{comment.owner?.display_name}}</a>
+                                / date: {{(comment.creation_date *1000) | date:"mediumDate"}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <h2 class="m-5 py-5 shadow card text-center" *ngIf="loading">
+                        Loading...
+                    </h2>
+                    <button type="button" (click)="loadMore()" class="btn btn-primary px-5 rounded-2"
+                        [class.mt-5]="!loading" *ngIf="!loading && hasMore">
+                        Load More
+                    </button>
+                </div>
+
+                <div class="col-12 text-center" *ngIf="(answers.length == 0) && !loading">
+                    <h2 class="m-5 py-5 shadow card text-center">
+                        Not Answered yet
+                    </h2>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12 text-center py-5">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

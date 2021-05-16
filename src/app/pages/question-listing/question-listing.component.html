@@ -1,0 +1,126 @@
+<div class="container-fluid pt-5 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-11 col-lg-8 col-12 pt-5">
+      <div class="row pb-3 justify-content-center">
+        <div class="col-md-3 mb-3" *ngIf="keyword">
+          Search For : {{keyword}}  
+          <small (click)="searchKeyword('')">
+            (Clear)
+          </small>
+        </div> 
+        <div class="col text-center text-md-end">
+          <div class="d-inline-block mb-3 me-4">
+            <button type="button" class="btn" [class.btn-outline-primary]="sort!='activity'"
+              [class.btn-primary]="sort=='activity'" (click)="changeSort('activity')">Activity</button>
+          </div>
+          <div class="d-inline-block mb-3 me-4">
+            <button type="button" class="btn" [class.btn-outline-primary]="sort!='votes'"
+              [class.btn-primary]="sort=='votes'" (click)="changeSort('votes')">Votes</button>
+          </div>
+          <div class="d-inline-block mb-3 me-4">
+            <button type="button" class="btn" [class.btn-outline-primary]="sort!='creation'"
+              [class.btn-primary]="sort=='creation'" (click)="changeSort('creation')">Creation</button>
+          </div>
+          <div class="d-inline-block mb-3 me-4">
+            <button type="button" class="btn" [class.btn-outline-primary]="sort!='hot'"
+              [class.btn-primary]="sort=='hot'" (click)="changeSort('hot')">Hot</button>
+          </div>
+          <div class="d-inline-block mb-3 me-4">
+            <button type="button" class="btn" [class.btn-outline-primary]="sort!='week'"
+              [class.btn-primary]="sort=='week'" (click)="changeSort('week')">Week</button>
+          </div>
+          <div class="d-inline-block mb-3">
+            <button type="button" class="btn" [class.btn-outline-primary]="sort!='month'"
+              [class.btn-primary]="sort=='month'" (click)="changeSort('month')">Month</button>
+          </div>
+        </div>
+      </div>
+      <div class="row pb-5">
+        <div class="col-12" *ngFor="let question of questions">
+          <div class="shadow card-body main mx-auto mt-5 position-relative">
+            <div class="card userInfo shadow-sm">
+              <a class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <img [src]="question.owner.profile_image" alt="@mdo" width="75" height="75" class="rounded mr-2"
+                    loading="lazy">
+                  <span class="px-4">
+                    <small class="text-muted">
+                      Posted By
+                    </small>
+                    <br>
+                    <a [href]="question.owner.link" target="_blank">
+                      <strong>{{question.owner.display_name}}</strong> 
+                    </a>
+                  </span>
+                </div>
+                <button class="btn btn-circle btn-outline-primary rounded-circle"><span> {{question.owner.reputation}} </span><br><small> Score </small></button>
+              </a>
+            </div>
+            <div [routerLink]='["details",question.question_id]'  class="row d-flex align-items-start  pt-5">
+              <div class="col-md-9 overflow-hidden text-center text-md-start">
+                <h3 class="text-start">
+                  <b>
+                    {{question.title}}
+                  </b>
+                </h3>
+                <hr>
+                <div [innerHtml]="question.body" class="ps-3 text-start questionBody">
+
+                </div>
+                <div class="py-3 text-center text-md-start">
+                  <button type="button" *ngFor="let tag of question.tags"
+                    class="btn btn-sm mb-3 btn-outline-dark small p-0 me-3 px-3 pill">{{tag}}</button>
+
+                </div>
+              </div>
+              <div class="col-md-3 d-flex justify-content-around">
+                <button class="btn btn-circle btn-outline-primary rounded-circle">
+                  <span>
+                    {{question.score}}
+                  </span>
+                  <br>
+                  <small>
+                    Votes
+                  </small>
+                </button>
+                <button class="btn btn-circle btn-outline-primary rounded-circle">
+                  <span>
+                    {{question.answer_count}}
+                  </span>
+                  <br>
+                  <small>
+                    Answers
+                  </small>
+                </button>
+                <button class="btn btn-circle btn-outline-primary rounded-circle">
+                  <span>
+                    {{question.view_count}}
+                  </span>
+                  <br>
+                  <small>
+                    Views
+                  </small>
+                </button>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-12 text-center">
+          <h2 class="m-5 py-5 shadow card text-center" *ngIf="loading">
+            Loading...
+          </h2>
+          <button type="button" (click)="loadMore()" class="btn btn-primary px-5 rounded-2" [class.mt-5]="!loading"
+            *ngIf="!loading && hasMore">
+            Load More
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center py-5">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

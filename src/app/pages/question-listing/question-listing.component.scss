@@ -1,0 +1,41 @@
+.pill{
+    border-radius: 30px;
+    opacity: .5;
+}
+.btn-circle{
+    text-align: center;
+    width: 75px;
+    padding: 0;
+    transform: scale(.75);
+    height: 75px;
+}
+.card-body.main{
+    width: 93%;
+    cursor: pointer;
+}
+.userInfo{
+    position: absolute;
+    transform: translateY(-50%);
+    right: 30px;
+    width: 100%;
+    cursor: pointer;
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+}
+@media screen and (max-width:768px) {
+    .userInfo{
+        right: 10%;
+        width: 80%;
+    }
+}
+.questionBody{
+    img{
+        width: 100%;
+    }
+    pre{
+        background-color: rgba(0,0,0,.1);
+        padding: 10px;
+    }
+}
