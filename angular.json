@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TeamWave": {
+    "StackSearch": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/TeamWave",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "TeamWave:build"
+            "browserTarget": "StackSearch:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "TeamWave:build:production"
+              "browserTarget": "StackSearch:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "TeamWave:build"
+            "browserTarget": "StackSearch:build"
           }
         },
         "test": {
@@ -117,16 +117,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "TeamWave:serve"
+            "devServerTarget": "StackSearch:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "TeamWave:serve:production"
+              "devServerTarget": "StackSearch:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "TeamWave"
+  "defaultProject": "StackSearch"
 }
