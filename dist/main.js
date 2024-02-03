@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! G:\Platforms\Github\mk8054\stackSearch\src\main.ts */"zUnb");
+module.exports = __webpack_require__(/*! D:\Bitbucket\stackSearch\src\main.ts */"zUnb");
 
 
 /***/ }),
